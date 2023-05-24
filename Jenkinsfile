@@ -1,37 +1,18 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Stage One') {
+        stage('Build') {
             steps {
-                echo 'Hello Stage One - Step 1'
-				echo 'Hello Stage One - Step 1' 
-				build job : "myfirstjob"
+                sh 'npm install' // Install dependencies
+                sh 'npm run build' // Build LuciBot
             }
         }
-		stage('Stage Two') {
+        
+        stage('Test') {
             steps {
-		input('Do you want to proceed?')
-                echo 'Hello Stage Two - Step 1'
-				echo 'Hello Stage Two - Step 2'
+                sh 'npm run test' // Run tests
             }
-        }
-		stage('Stage Three') {
-			parallel {
-				stage('Parallel1') {
-					 steps {
-						ech 'Hello Stage Three - Step 1'
-						echo 'Hello Stage Three - Step 2'
-            				}
-				}
-				stage('Parallel2') {
-					 steps {
-						echo 'Hello Stage Three - Step 3'
-						echo 'Hello Stage Three - Step 4'
-            				}
-				}
-			}
-           
         }
     }
 }
